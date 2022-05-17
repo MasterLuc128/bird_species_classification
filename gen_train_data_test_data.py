@@ -42,8 +42,8 @@ def gen_data():
 
         # Samples Location
         train_data = join(datapath, "train/" + bird_specie)
-        val_data = join(datapath, "valid/" + bird_specie)
-        test_data = join(datapath, "test/" + bird_specie)
+        val_data = join(datapath, "validation/" + bird_specie)
+        test_data = join(datapath, "test_data/" + bird_specie)
 
         # Samples Files
         train_files = listdir(train_data)
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     x_train, y_train, x_valid, y_valid, x_test, y_test = gen_data()
 
     y_train = np_utils.to_categorical(y_train, N_CLASSES)
-    y_valid = np_utils.to_categorical(y_train, N_CLASSES)
+    y_valid = np_utils.to_categorical(y_valid, N_CLASSES)
     y_test = np_utils.to_categorical(y_test, N_CLASSES)
 
     np.save("X_train.npy", x_train)

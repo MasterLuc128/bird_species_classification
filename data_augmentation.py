@@ -118,13 +118,13 @@ def save_images(
 # Dataset Augmentation
 
 gauss = iaa.AdditiveGaussianNoise(scale=0.2 * 255)
-# blur = iaa.GaussianBlur(sigma=(3.0))
-# flip = iaa.Fliplr(1.0)
-# contrast = iaa.ContrastNormalization((0.5, 1.5), per_channel=0.5)
+blur = iaa.GaussianBlur(sigma=(3.0))
+flip = iaa.Fliplr(1.0)
+contrast = iaa.ContrastNormalization((0.5, 1.5), per_channel=0.5)
 sharp = iaa.Sharpen(alpha=(0, 0.3), lightness=(0.7, 1.3))
 affine = iaa.Affine(translate_px={"x": (-50, 50), "y": (-50, 50)})
-# add = iaa.Add((-20, 20), per_channel=0.5)
-# multiply  = iaa.Multiply((0.8, 1.2), per_channel=0.5)
+add = iaa.Add((-20, 20), per_channel=0.5)
+multiply  = iaa.Multiply((0.8, 1.2), per_channel=0.5)
 
 hue = iaa.Sequential(
     [
@@ -172,9 +172,9 @@ def main():
 
                 img = cv2.imread(img_path)
                 augmented_images_arr.append(img)
-
+        border = 100
         counter = 0
-        if len(augmented_images_arr) < 9:
+        if len(augmented_images_arr) < border:
             # Applying Gaussian image augmentation
             for augmented_image in gauss.augment_images(augmented_images_arr):
                 save_images(
@@ -185,7 +185,66 @@ def main():
                     20,
                 )
                 counter += 1
-
-
+        counter = 0
+        if len(augmented_images_arr) < border:
+            # Applying Gaussian image augmentation
+            for augmented_image in blur.augment_images(augmented_images_arr):
+                save_images(
+                    augmented_image,
+                    augmented_image_folder,
+                    img_number[counter],
+                    bird_specie_number,
+                    30,
+                )
+                counter += 1
+        counter = 0
+        if len(augmented_images_arr) < border:
+            # Applying Gaussian image augmentation
+            for augmented_image in flip.augment_images(augmented_images_arr):
+                save_images(
+                    augmented_image,
+                    augmented_image_folder,
+                    img_number[counter],
+                    bird_specie_number,
+                    40,
+                )
+                counter += 1
+        counter = 0
+        if len(augmented_images_arr) < border:
+            # Applying Gaussian image augmentation
+            for augmented_image in contrast.augment_images(augmented_images_arr):
+                save_images(
+                    augmented_image,
+                    augmented_image_folder,
+                    img_number[counter],
+                    bird_specie_number,
+                    50,
+                )
+                counter += 1
+        counter = 0
+        if len(augmented_images_arr) < border:
+            # Applying Gaussian image augmentation
+            for augmented_image in sharp.augment_images(augmented_images_arr):
+                save_images(
+                    augmented_image,
+                    augmented_image_folder,
+                    img_number[counter],
+                    bird_specie_number,
+                    50,
+                )
+                counter += 1
+        counter = 0
+        if len(augmented_images_arr) < border:
+            # Applying Gaussian image augmentation
+            for augmented_image in affine.augment_images(augmented_images_arr):
+                save_images(
+                    augmented_image,
+                    augmented_image_folder,
+                    img_number[counter],
+                    bird_specie_number,
+                    16,
+                )
+                counter += 1
+        
 if __name__ == "__main__":
     main()

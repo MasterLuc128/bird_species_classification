@@ -6,7 +6,7 @@ import os
 from matplotlib import pyplot as plt
 import numpy as np
 from keras.layers import Conv2D, MaxPooling2D
-from keras.optimizers import Adam
+from tensorflow.keras.optimizers import Adam
 from keras.layers import (
     Dense,
     Activation,

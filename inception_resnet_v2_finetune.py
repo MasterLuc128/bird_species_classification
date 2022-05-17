@@ -7,7 +7,7 @@ from keras.layers import (
     Flatten,
     AveragePooling2D,
 )
-from keras.optimizers import Adam
+from tensorflow.keras.optimizers import Adam
 from keras.models import Model
 from keras.callbacks import LearningRateScheduler
 from keras.applications.inception_resnet_v2 import InceptionResNetV2
@@ -160,14 +160,15 @@ if __name__ == "__main__":
     # y_train_crop = np_utils.to_categorical(y_train, N_CLASSES)
 
     # Loading Original Images for training resized to 416x416
-    # x_train_original = np.load('X_train.npy')
-    # y_train_original = np.load('Y_train.npy')
-    # x_valid          = np.load('X_valid.npy')
-    # y_valid          = np.load('Y_valid.npy')
+    x_train_original = np.load('X_train.npy')
+    y_train_original = np.load('Y_train.npy')
+    x_valid          = np.load('X_valid.npy')
+    y_valid          = np.load('Y_valid.npy')
 
     # Loading Original Images for Testing rsized to 416x416
     x_test = np.load("X_test.npy")
-    y_test = np.load("Y_test_categorical.npy")
+    # y_test = np.load("Y_test_categorical.npy")
+    y_test = np.load("Y_test.npy")
 
     # print(x_train.shape, y_train.shape)
 
@@ -178,7 +179,7 @@ if __name__ == "__main__":
     model = build_inception_resnet_V2()
 
     # Loading Trained weights
-    model.load_weights("inception_resnet_v2_images+crops.h5")
+    model.load_weights("inception_resnet_full_old_dataset.h5")
 
     # Model Fitting with 10% of the images used for Validation purpose
     # history = model.fit(x_train_original, y_train_original,
@@ -191,10 +192,17 @@ if __name__ == "__main__":
     #     )
 
     # Save Model Weights
-    # model.save_weights('inception_resnet_crops.h5')
+    # model.save_weights('inception_resnet_full_old_dataset.h5')
 
     # Calculate score over test data
-    score = model.evaluate(x_test, y_test, verbose=1, batch_size=BATCH_SIZE)
+    score_test = model.evaluate(x_test, y_test, verbose=1, batch_size=BATCH_SIZE)
 
     # Prints Precision, Recall, and F-1 score
-    print(score)
+    print("test", score_test)
+
+    # Calculate score over test data
+    score_valid = model.evaluate(x_valid, y_valid, verbose=1, batch_size=BATCH_SIZE)
+
+    # Prints Precision, Recall, and F-1 score
+    print("valid", score_valid)
+    

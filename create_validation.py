@@ -39,7 +39,7 @@ def create_validation():
         train_imgs_path = join(train_dir, bird_specie)
         if not exists(join(validation_dir, bird_specie)):
             destination = makedirs(join(validation_dir, bird_specie))
-
+        destination = join(validation_dir, bird_specie)
         train_imgs = listdir(train_imgs_path)
         number = len(train_imgs)  # number of images in each category
         if number < 78:
